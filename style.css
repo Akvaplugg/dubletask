@@ -1,0 +1,637 @@
+/* Основные стили - Фиолетовая тема "Сироп и Перки" */
+:root {
+    --syrup-light: #e6d4ff;
+    --syrup-base: #b18edd;
+    --syrup-dark: #8a63d2;
+    --perk-gold: #ffd700;
+    --perk-gold-dark: #ffa500;
+    --priority-low: #d4c2ff;
+    --priority-medium: #b18edd;
+    --priority-high: #8a63d2;
+    --priority-urgent: #6a4fbb;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --completed-task: #f0e6ff;
+    --background: #faf5ff;
+    --text: #2d1b69;
+    --text-light: #6d5ba8;
+}
+
+/* Остальной CSS код остается без изменений... */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #faf5ff 0%, #f0e6ff 50%, #e6d4ff 100%);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    color: var(--text);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Боковые декоративные изображения - УВЕЛИЧЕННЫЕ */
+.side-decoration {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 450px;
+    z-index: -1;
+    opacity: 0.8;
+    transition: all 0.5s ease;
+}
+
+.left-decoration {
+    left: 30px;
+}
+
+.right-decoration {
+    right: 30px;
+}
+
+.side-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 25px;
+    filter: 
+        sepia(0.3) 
+        hue-rotate(250deg) 
+        saturate(1.6)
+        brightness(0.85)
+        contrast(1.2);
+    box-shadow: 
+        0 15px 40px rgba(138, 99, 210, 0.4),
+        0 0 0 3px rgba(177, 142, 221, 0.6);
+    transition: all 0.5s ease;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(177, 142, 221, 0.4) 0%,
+        rgba(138, 99, 210, 0.3) 50%,
+        rgba(106, 79, 187, 0.4) 100%
+    );
+    border-radius: 25px;
+    mix-blend-mode: overlay;
+}
+
+/* Эффекты при наведении - УСИЛЕННЫЕ */
+.side-decoration:hover {
+    opacity: 0.95;
+    transform: translateY(-50%) scale(1.08);
+}
+
+.side-decoration:hover .side-image {
+    filter: 
+        sepia(0.2) 
+        hue-rotate(245deg) 
+        saturate(2.0)
+        brightness(1.1)
+        contrast(1.3);
+    box-shadow: 
+        0 20px 50px rgba(138, 99, 210, 0.6),
+        0 0 0 4px rgba(255, 215, 0, 0.4);
+}
+
+/* Адаптивность для БОЛЬШИХ боковых изображений */
+@media (max-width: 1400px) {
+    .side-decoration {
+        width: 250px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .side-decoration {
+        width: 220px;
+        height: 350px;
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 1000px) {
+    .side-decoration {
+        width: 180px;
+        height: 300px;
+        opacity: 0.6;
+    }
+    
+    .left-decoration {
+        left: 15px;
+    }
+    
+    .right-decoration {
+        right: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-decoration {
+        width: 150px;
+        height: 250px;
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 600px) {
+    .side-decoration {
+        display: none;
+    }
+}
+
+/* Остальные стили */
+.container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    border: 2px solid var(--syrup-base);
+    box-shadow: 
+        0 10px 30px rgba(138, 99, 210, 0.2),
+        0 0 0 1px rgba(255, 215, 0, 0.1) inset;
+    position: relative;
+    z-index: 1;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, var(--perk-gold) 0%, transparent 70%);
+    opacity: 0.1;
+    border-radius: 50%;
+}
+
+h1 {
+    text-align: center;
+    color: var(--text);
+    font-size: 2.8em;
+    margin-bottom: 25px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--syrup-dark) 0%, var(--text) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(138, 99, 210, 0.1);
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 15px;
+    border: 2px solid var(--syrup-light);
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background: #fcfaff;
+}
+
+input[type="text"]:focus {
+    border-color: var(--syrup-dark);
+    box-shadow: 0 0 0 3px rgba(138, 99, 210, 0.2);
+    outline: none;
+    background: white;
+}
+
+select {
+    padding: 12px 15px;
+    border: 2px solid var(--syrup-light);
+    border-radius: 12px;
+    font-size: 16px;
+    background: #fcfaff;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+select:focus {
+    border-color: var(--syrup-dark);
+    outline: none;
+    background: white;
+}
+
+#addTaskButton {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--syrup-base) 0%, var(--syrup-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+
+#addTaskButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+#addTaskButton:hover::before {
+    left: 100%;
+}
+
+#addTaskButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 5px 15px rgba(138, 99, 210, 0.4),
+        0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filters {
+    display: flex;
+    gap: 5px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background: var(--syrup-light);
+    border: 1px solid var(--syrup-base);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: linear-gradient(135deg, var(--syrup-base) 0%, var(--syrup-dark) 100%);
+    color: white;
+    border-color: var(--syrup-dark);
+    transform: translateY(-1px);
+}
+
+#clearCompleted {
+    padding: 8px 16px;
+    background: var(--syrup-light);
+    border: 1px solid var(--syrup-base);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+#clearCompleted:hover {
+    background: linear-gradient(135deg, #ff6b6b 0%, var(--danger-color) 100%);
+    color: white;
+    border-color: var(--danger-color);
+    transform: translateY(-1px);
+}
+
+.task-list {
+    margin-top: 20px;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-left: 5px solid var(--priority-low);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fcfaff 0%, #f8f4ff 100%);
+    transition: all 0.3s;
+    animation: fadeIn 0.5s;
+    box-shadow: 0 2px 8px rgba(138, 99, 210, 0.1);
+    position: relative;
+}
+
+.task::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 215, 0, 0.03) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.task:hover::before {
+    opacity: 1;
+}
+
+.task:hover {
+    transform: translateX(5px);
+    box-shadow: 
+        0 5px 20px rgba(138, 99, 210, 0.2),
+        0 0 0 1px rgba(255, 215, 0, 0.1) inset;
+}
+
+.task.priority-low {
+    border-left-color: var(--priority-low);
+    background: linear-gradient(135deg, #fcfaff 0%, #f4f0ff 100%);
+}
+
+.task.priority-medium {
+    border-left-color: var(--priority-medium);
+    background: linear-gradient(135deg, #f8f4ff 0%, #f0eaff 100%);
+    border-left-width: 6px;
+}
+
+.task.priority-high {
+    border-left-color: var(--priority-high);
+    background: linear-gradient(135deg, #f4f0ff 0%, #ece2ff 100%);
+    border-left-width: 7px;
+    box-shadow: 0 3px 12px rgba(138, 99, 210, 0.15);
+}
+
+.task.completed {
+    background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+    opacity: 0.7;
+}
+
+.task.completed .task-text {
+    text-decoration: line-through;
+    color: var(--text-light);
+}
+
+.task-text {
+    flex: 1;
+    margin: 0 15px;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.priority-badge {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    min-width: 70px;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.priority-low { 
+    background: linear-gradient(135deg, var(--priority-low) 0%, #c5b0ff 100%);
+    box-shadow: 0 2px 4px rgba(177, 142, 221, 0.3);
+}
+
+.priority-medium { 
+    background: linear-gradient(135deg, var(--priority-medium) 0%, #9d7bd4 100%);
+    box-shadow: 0 2px 4px rgba(138, 99, 210, 0.4);
+}
+
+.priority-high { 
+    background: linear-gradient(135deg, var(--priority-high) 0%, #7a55c7 100%);
+    box-shadow: 0 2px 6px rgba(106, 79, 187, 0.5);
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.completeButton, .deleteButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+.completeButton {
+    background: linear-gradient(135deg, var(--success-color) 0%, #218838 100%);
+    color: white;
+}
+
+.completeButton:hover {
+    background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px rgba(40, 167, 69, 0.4);
+}
+
+.deleteButton {
+    background: linear-gradient(135deg, var(--danger-color) 0%, #c82333 100%);
+    color: white;
+}
+
+.deleteButton:hover {
+    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px rgba(220, 53, 69, 0.4);
+}
+
+.stats {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--syrup-light) 0%, #e6d4ff 100%);
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--text);
+    border: 1px solid var(--syrup-base);
+}
+
+.image-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.footer-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 
+        0 5px 20px rgba(138, 99, 210, 0.3),
+        0 0 0 2px rgba(255, 215, 0, 0.2);
+    border: 3px solid white;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(-10px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.3s forwards;
+}
+
+@keyframes fadeOut {
+    to { 
+        opacity: 0; 
+        transform: translateX(100px) rotate(5deg); 
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .input-container {
+        flex-direction: column;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filters {
+        justify-content: center;
+    }
+    
+    .task {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .task-actions {
+        align-self: stretch;
+        justify-content: space-between;
+    }
+    
+    .completeButton, .deleteButton {
+        flex: 1;
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 2.2em;
+    }
+}
+
+.task::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -2px;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: var(--perk-gold);
+    border-radius: 2px;
+    transition: height 0.3s;
+}
+
+.task:hover::after {
+    height: 60%;
+}
+
+.task.completed::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 215, 0, 0.1) 100%);
+}
+
+/* PWA стили */
+.install-prompt {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--syrup-base) 0%, var(--syrup-dark) 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    z-index: 1000;
+    max-width: 90%;
+    width: 300px;
+}
+
+.install-content {
+    text-align: center;
+}
+
+.install-content p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+#installButton, #cancelInstall {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#installButton {
+    background: var(--perk-gold);
+    color: var(--text);
+    font-weight: bold;
+}
+
+#cancelInstall {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+@media all and (display-mode: fullscreen) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        margin: 10px auto;
+        max-width: 100%;
+    }
+}
+
+@media all and (display-mode: standalone) {
+    body {
+        padding: 15px;
+    }
+    
+    .side-decoration {
+        opacity: 0.9;
+    }
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DubleTask - Управление задачами</title>
+    
+    <!-- Базовые иконки -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Иконки для Apple -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <!-- Иконки различных размеров -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    
+    <!-- SVG иконка (универсальная) -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- PWA манифест -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Мета-теги -->
+    <meta name="msapplication-TileColor" content="#8a63d2">
+    <meta name="msapplication-TileImage" content="mstile-144x144.png">
+    <meta name="theme-color" content="#8a63d2">
+    
+    <!-- Дополнительные PWA мета-теги -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DubleTask">
+    <meta name="description" content="DubleTask - приложение для управления задачами с красивым дизайном">
+    <meta name="keywords" content="задачи, todo, список, продуктивность, DubleTask">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="side-decoration left-decoration">
+        <img src="fendi.jpg" alt="Fendi" class="side-image">
+        <div class="image-overlay"></div>
+    </div>
+    
+    <div class="side-decoration right-decoration">
+        <img src="glock.jpeg" alt="Glock" class="side-image">
+        <div class="image-overlay"></div>
+    </div>
+
+    <div class="container">
+        <h1>📝 DubleTask</h1>
+
+        <!-- Форма добавления новой задачи -->
+        <div class="input-container">
+            <input type="text" id="newTaskInput" placeholder="Введите задачу..." autofocus>
+            <select id="priorityInput">
+                <option value="low">Низкий</option>
+                <option value="medium">Средний</option>
+                <option value="high">Высокий</option>
+            </select>
+            <button id="addTaskButton">Добавить</button>
+        </div>
+
+        <!-- Панель управления (фильтры, очистка) -->
+        <div class="controls">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="active">Активные</button>
+                <button class="filter-btn" data-filter="completed">Выполненные</button>
+            </div>
+            <button id="clearCompleted">Очистить выполненные</button>
+        </div>
+
+        <!-- Контейнер для списка задач -->
+        <div id="taskList" class="task-list"></div>
+
+        <!-- Блок с статистикой -->
+        <div id="stats" class="stats">Всего задач: <span id="totalCount">0</span>. Активных: <span id="activeCount">0</span>.</div>
+
+        <!-- Изображение -->
+        <div class="image-container">
+            <img src="task.jpeg" alt="Мотивирующая картинка" class="footer-image">
+        </div>
+    </div>
+
+    <!-- PWA установка -->
+    <div id="installPrompt" class="install-prompt" style="display: none;">
+        <div class="install-content">
+            <p>Установите DubleTask для быстрого доступа!</p>
+            <button id="installButton">Установить</button>
+            <button id="cancelInstall">Позже</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <!-- PWA скрипт -->
+    <script>
+        // Регистрация Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(function(registration) {
+                        console.log('Service Worker зарегистрирован:', registration);
+                    })
+                    .catch(function(error) {
+                        console.log('Ошибка регистрации Service Worker:', error);
+                    });
+            });
+        }
+
+        // Обработка установки PWA
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const installButton = document.getElementById('installButton');
+        const cancelInstall = document.getElementById('cancelInstall');
+
+        if (installPrompt && installButton && cancelInstall) {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installPrompt.style.display = 'block';
+            });
+
+            installButton.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        console.log('Пользователь установил приложение');
+                        installPrompt.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                }
+            });
+
+            cancelInstall.addEventListener('click', () => {
+                installPrompt.style.display = 'none';
+            });
+
+            window.addEventListener('appinstalled', (evt) => {
+                installPrompt.style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
